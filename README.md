@@ -2,7 +2,7 @@
 
 # GameName
 
-Write what is this git respository? GameChallange project for xyz compatation etc.
+VexEco, a video game designed by Cansu, Nurcan, and Nihan for the Global Gamers Challenge, is an innovative solution aimed at addressing climate anxiety. This game is created to empower individuals to combat plastic pollution and clean up trash in their surroundings. At the end of each day, players are encouraged to reflect on the impact of their actions and raise awareness about the importance of tackling plastic pollution. VexEco serves as a tool for fostering environmental consciousness and inspiring collective action.
 
 ![Alt text](./assets/images/medium.png)
 

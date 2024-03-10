@@ -39,9 +39,9 @@ class GameOverScreen extends StatelessWidget {
                           bottom: 25, // Adjust position as needed
                           right: 5,
                           child: Semantics(
-                            label: 'You got: ${game.score * 300} gold',
+                            label: 'You got: ${game.score * 1000} gold',
                             child: Text(
-                              '${game.score * 2600}',
+                              '${game.score * 1000}',
                               style: const TextStyle(
                                   color: Colors.black87,
                                   fontSize: 25,

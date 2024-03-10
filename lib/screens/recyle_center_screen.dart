@@ -4,7 +4,7 @@ import 'package:second_try/main.dart';
 
 class RecycleCenterScreen extends StatelessWidget {
   final VexEcoGame game;
-  final int level1 = 2, level2 = 10, level3 = 20;
+  final int level1 = 1, level2 = 26, level3 = 52;
   static const String id = 'recycleCenter';
   RecycleCenterScreen({
     Key? key,
@@ -41,7 +41,8 @@ class RecycleCenterScreen extends StatelessWidget {
 
     Semantics(
       label: 'Champion',
-      child: Image.asset(Assets.recycleCenterImage,
+      child: Image.asset(
+        Assets.recycleCenterImage,
       ),
     );
 
@@ -76,7 +77,7 @@ class RecycleCenterScreen extends StatelessWidget {
     } else if (currentScore >= level2 && currentScore < level3) {
       youSavedAnimalPicture = 'turtle.png';
       scale2 = 1;
-      game.level =  1;
+      game.level = 1;
     } else {
       youSavedAnimalPicture = 'turtle.png';
       scale3 = 1;
@@ -107,85 +108,85 @@ class RecycleCenterScreen extends StatelessWidget {
           game.resumeEngine();
         },
         child: Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(recycleCenterImage),
-                fit: BoxFit.fill,
-              ),
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(recycleCenterImage),
+              fit: BoxFit.fill,
             ),
-
-            child: Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-    SizedBox(height: spaceSizes[0]),
-    Center(
-    child: Stack(
-    alignment: Alignment.center,
-    children: <Widget>[
-    Semantics(
-    label: 'Gold', // Provide a semantic label for the image
-    child: Image.asset(
-    'assets/images/money.png',
-    width: (screenHeight / 8),
-    height: (screenHeight / 8),
-    ),
-    ),
-    Positioned(
-    bottom: 10, // Adjust position as needed
-    right: 4,
-    child: Semantics(
-    label: 'You got: ${currentScore * 2600} gold', // Provide a semantic label for the score
-    child: Text(
-    (currentScore * 2600).toString(),
-    style: const TextStyle(
-    fontFamily: 'Galindo',
-    color: Colors.black87,
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    ),
-    ),
-    ),
-    ),
-    ],
-    ),
-    ),
-    SizedBox(height: spaceSizes[1]),
-      Image.asset(
-        'assets/images/$youSavedAnimalPicture',
-        height: (screenHeight / 8) * 1.5,
-      ),
-    SizedBox(height: spaceSizes[2]),
-    ElevatedButton(
-    onPressed: () => onContinue(currentScore),
-    style: ElevatedButton.styleFrom(
-    backgroundColor: Color(0xFF677D4A),
-    ),
-    child: Semantics(
-    label: 'Click this button to Continue', // Provide a semantic label for the button
-    child: Text(
-    'Continue',
-    style: TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    color: Colors.white,
-    fontFamily: 'Galindo',
-    ),
-    ),
-    ),
-    ),
-    SizedBox(height: spaceSizes[3]),
-    Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: imageWidgets,
-    )
-    ],
-    ),
-      ),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: spaceSizes[0]),
+              Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Semantics(
+                      label: 'Gold', // Provide a semantic label for the image
+                      child: Image.asset(
+                        'assets/images/money.png',
+                        width: (screenHeight / 8),
+                        height: (screenHeight / 8),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 10, // Adjust position as needed
+                      right: 4,
+                      child: Semantics(
+                        label:
+                            'You got: ${currentScore * 1000} gold', // Provide a semantic label for the score
+                        child: Text(
+                          (currentScore * 1000).toString(),
+                          style: const TextStyle(
+                            fontFamily: 'Galindo',
+                            color: Colors.black87,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: spaceSizes[1]),
+              Image.asset(
+                'assets/images/$youSavedAnimalPicture',
+                height: (screenHeight / 8) * 1.5,
+              ),
+              SizedBox(height: spaceSizes[2]),
+              ElevatedButton(
+                onPressed: () => onContinue(currentScore),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF677D4A),
+                ),
+                child: Semantics(
+                  label:
+                      'Click this button to Continue', // Provide a semantic label for the button
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Galindo',
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: spaceSizes[3]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: imageWidgets,
+              )
+            ],
+          ),
+        ),
       ),
     );
-
   }
 
   void onContinue(int currentScore) {
