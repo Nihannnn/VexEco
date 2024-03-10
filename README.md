@@ -4,7 +4,7 @@
 
 Write what is this git respository? GameChallange project for xyz compatation etc.
 
-![Alt text](./assets/images/main_screen_desktop.png)
+![Alt text](./assets/images/medium.png)
 
 
 ## Framework and Language
@@ -44,6 +44,5 @@ The project follows a standard Flutter app structure with additional directories
 
 ## Acknowledgments
 - Flutter Flame community for providing a powerful game engine for Flutter.
-- Contributors to this project.
 
 Happy coding and gaming! 🎮🚀
