@@ -16,6 +16,7 @@ class EnemyCreator extends TimerComponent with HasGameReference<VexEcoGame> {
   void onTick() {
     Random random = Random();
     int randomNumber = random.nextInt(2);
+    // enemyType 3 or 4
     int enemyType = randomNumber + 3;
     double randomDouble = generateRandomDouble(game.size.y * (1 / 7), game.size.y * (2 / 7));
 

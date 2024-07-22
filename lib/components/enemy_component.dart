@@ -25,8 +25,8 @@ class EnemyComponent extends SpriteAnimationComponent
       'enemy$enemyType.png',
       SpriteAnimationData.sequenced(
         stepTime: 0.2,
-        amount: 11,
-        textureSize: Vector2(681, 982),
+        amount: enemyType == '3' ? 6 : 2,
+        textureSize: enemyType == '3' ? Vector2(153, 152) : Vector2(137, 205),
       ),
     );
     add(CircleHitbox(collisionType: CollisionType.passive));

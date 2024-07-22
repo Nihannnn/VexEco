@@ -30,7 +30,7 @@ class BigRecycle extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         amount: 2,
         stepTime: .2,
-        textureSize: Vector2(2366, 2655),
+        textureSize: Vector2(374, 500),
       ),
     );
   }

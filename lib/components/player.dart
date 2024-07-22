@@ -10,11 +10,12 @@ import 'package:second_try/components/bottle.dart';
 import 'package:second_try/components/bottle_creator.dart';
 import 'package:second_try/components/enemy_component.dart';
 import 'package:second_try/components/food.dart';
+import 'package:second_try/components/health.dart';
 import 'package:second_try/main.dart';
 
 class Player extends SpriteAnimationComponent
     with HasGameReference<VexEcoGame>, CollisionCallbacks {
-  static const playerSizeX = 150.0, playerSizeY = 150.0;
+  static const playerSizeX = 100.0, playerSizeY = 100.0;
   Player()
       : super(
           size: Vector2(playerSizeX, playerSizeY),
@@ -70,7 +71,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: .2,
         amount: 6,
-        textureSize: Vector2(1198, 1198),
+        textureSize: Vector2(130, 203),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -79,8 +80,8 @@ class Player extends SpriteAnimationComponent
       'jump_vex.png',
       SpriteAnimationData.sequenced(
         stepTime: .3,
-        amount: 7,
-        textureSize: Vector2(1198, 1198),
+        amount: 6,
+        textureSize: Vector2(130, 203),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -93,7 +94,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: .3,
         amount: 6,
-        textureSize: Vector2(1198, 1198),
+        textureSize: Vector2(240, 255),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -105,8 +106,8 @@ class Player extends SpriteAnimationComponent
       'walk_sup_vex.png',
       SpriteAnimationData.sequenced(
         stepTime: .3,
-        amount: 7,
-        textureSize: Vector2(1198, 1198),
+        amount: 6,
+        textureSize: Vector2(157, 209 ),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -118,8 +119,8 @@ class Player extends SpriteAnimationComponent
       'jump_sup_vex.png',
       SpriteAnimationData.sequenced(
         stepTime: .3,
-        amount: 7,
-        textureSize: Vector2(1198, 1198),
+        amount: 6,
+        textureSize: Vector2(157, 209 ),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -132,7 +133,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: 0.1,
         amount: 2,
-        textureSize: Vector2(1198, 1198),
+        textureSize: Vector2(130, 203),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -145,7 +146,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: 0.1,
         amount: 3,
-        textureSize: Vector2(1198, 1198),
+        textureSize: Vector2(240, 255),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -158,7 +159,7 @@ class Player extends SpriteAnimationComponent
       SpriteAnimationData.sequenced(
         stepTime: .3,
         amount: 2,
-        textureSize: Vector2(1198, 1198),
+        textureSize: Vector2(130, 203),
         //texturePosition: Vector2(400, 600)
       ),
     );
@@ -243,6 +244,10 @@ class Player extends SpriteAnimationComponent
     } else if (other is Food) {
       other.takeHit();
       game.collectFood();
+      FlameAudio.play('sound.mp3');
+    } else if (other is Health) {
+      other.takeHit();
+      game.increaseLive();
       FlameAudio.play('sound.mp3');
     } else if (other is EnemyComponent && other.isHit == false) {
       other.isHit = true;

@@ -125,7 +125,7 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
                     widget.game.isMusicPlaying = !widget.game.isMusicPlaying;
                     if (widget.game.isMusicPlaying &&
                         !FlameAudio.bgm.isPlaying) {
-                      FlameAudio.bgm.play('IntroTheme.wav');
+                      FlameAudio.bgm.play('IntroTheme.mp3');
                     } else {
                       FlameAudio.bgm.pause();
                     }

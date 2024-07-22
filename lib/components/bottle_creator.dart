@@ -27,7 +27,7 @@ class BottleCreator extends TimerComponent
   void onTick() {
     game.addAll(
       List.generate(
-        game.level + 1,
+        1,
         (index) => generateBottle(index)..priority=2,
       ),
     );

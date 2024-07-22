@@ -4,6 +4,7 @@ import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
+import 'package:flame/layout.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'package:second_try/components/big_recycle_creator.dart';
 import 'package:second_try/components/bottle_creator.dart';
 import 'package:second_try/components/enemy_creator.dart';
 import 'package:second_try/components/food_creator.dart';
+import 'package:second_try/components/health_creator.dart';
 import 'package:second_try/components/player.dart';
 import 'package:second_try/screens/game_over_screen.dart';
 import 'package:second_try/screens/guide_page.dart';
@@ -39,7 +41,8 @@ void main() async {
   ));
 }
 
-class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
+class VexEcoGame extends FlameGame
+    with TapCallbacks, HasCollisionDetection, WidgetsBindingObserver {
   late Player player;
   late Background background;
   late EnemyCreator enemyCreator;
@@ -52,10 +55,12 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
   late BigRecycleCreator bigRecycleCreator;
   late BottleCreator bottleCreator;
   late FoodCreator foodCreator;
+  late HealthCreator healthCreator;
   late SpriteComponent heart;
   late final FlameAudio flameAudio;
   late final FlameAudio hitSound;
   late final FlameAudio collectSound;
+
   bool isMusicPlaying = false;
   String guideType = 'tutorial';
 
@@ -71,12 +76,26 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
   @override
   Future<void> onLoad() async {
     super.onLoad();
+    WidgetsBinding.instance!.addObserver(this); // Add observer
     // Initialize FlameAudio
     bool isPlaying = FlameAudio.bgm.isPlaying;
     if (isMusicPlaying && !isPlaying) {
-      FlameAudio.bgm.play('IntroTheme.wav');
+      FlameAudio.bgm.play('IntroTheme.mp3');
     } else {
       FlameAudio.bgm.pause();
+    }
+    @override
+    void didChangeAppLifecycleState(AppLifecycleState state) {
+      switch (state) {
+        case AppLifecycleState.paused:
+          // App minimized, pause game logic (e.g., stop timers, animations)
+          gotoRecycleCenter();
+          break;
+        case AppLifecycleState.resumed:
+          break;
+        default:
+          break;
+      }
     }
 
     background = Background();
@@ -86,6 +105,7 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
     enemyCreator = EnemyCreator();
     bottleCreator = BottleCreator();
     foodCreator = FoodCreator();
+    healthCreator = HealthCreator();
 
     scoreText = TextComponent(
         position: Vector2(600, 700),
@@ -139,8 +159,8 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
 
     recycleBin = SpriteComponent.fromImage(
       Flame.images.fromCache('character.png'),
-      size: Vector2(60, 100),
-      position: size - Vector2(500, 500),
+      size: Vector2(80, 80),
+      position: size - Vector2(0, 0),
       anchor: Anchor.bottomRight,
     );
 
@@ -148,8 +168,7 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
 
     trashBin = SpriteComponent.fromImage(
       Flame.images.fromCache('character_1.png'),
-      size: Vector2(60, 100),
-      position: size - Vector2(400, 500),
+      size: Vector2(80, 80),
       anchor: Anchor.bottomRight,
     );
 
@@ -158,7 +177,6 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
     heart = SpriteComponent.fromImage(
       Flame.images.fromCache('heart.png'),
       size: Vector2(30, 30),
-      position: size - Vector2(400, 500),
       anchor: Anchor.bottomRight,
     );
 
@@ -170,6 +188,7 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
     add(recycleBin);
     add(heart);
     add(enemyCreator);
+    add(healthCreator);
     add(player..priority = 2);
 
     liveText.position.x = 360;
@@ -179,16 +198,16 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
     heart.position.y = 50;
 
     bottleText.position.x = 100;
-    bottleText.position.y = 140;
-
     foodText.position.x = 100;
-    foodText.position.y = 250;
+
+    bottleText.position.y = 70;
+    foodText.position.y = 200;
 
     trashBin.position.x = 80;
-    trashBin.position.y = 250;
-
     recycleBin.position.x = 80;
-    recycleBin.position.y = 140;
+
+    trashBin.position.y = 200;
+    recycleBin.position.y = 100;
 
     // add(scoreText);
     add(liveText);
@@ -218,6 +237,10 @@ class VexEcoGame extends FlameGame with TapCallbacks, HasCollisionDetection {
   void collectFood() {
     foodCount++;
     increaseScore();
+  }
+
+  void increaseLive() {
+    live++;
   }
 
   void increaseScore() {
